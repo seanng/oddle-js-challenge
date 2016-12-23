@@ -16,7 +16,7 @@ const ResultsList = ({results}) => {
     <div className="results-list">
       {results.map((result, i) => (
         <Result key={i} result={result} />
-      )}
+      ))}
     </div>
   )
 };
