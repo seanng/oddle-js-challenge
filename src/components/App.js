@@ -23,7 +23,6 @@ class App extends Component {
 
   submitQuery(input) {
     // submit ajax request here.
-    console.log('meow', input)
     let wordsArray = input.split(' ')
     if (wordsArray.length > 1) {
       input = wordsArray.join('%20');
@@ -35,9 +34,8 @@ class App extends Component {
     fetch(`https://api.github.com/search/users?q=${input}`)
     .then((response)=>{
       if (response.ok) {
-        response.blob()
-        .then(blob=>
-          this.populateResultsList(blob)
+        response.json().then(json=>
+          this.populateResultsList(json)
         )
       } else {
         console.log('Network response was not ok.')
@@ -51,7 +49,7 @@ class App extends Component {
   populateResultsList(results) {
     console.log(results)
     this.setState({
-      results: results
+      results: results.items
     })
   }
 
