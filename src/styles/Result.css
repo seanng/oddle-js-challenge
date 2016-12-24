@@ -1,0 +1,9 @@
+.result {
+  display: inline-block;
+  width: 25%;
+  padding: 20px;
+}
+
+.avatar {
+  max-width: 100%;
+}
