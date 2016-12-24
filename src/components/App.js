@@ -6,7 +6,9 @@ import '../styles/App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = null;
+    this.state = {
+      results: null
+    };
   }
 
   render() {
@@ -21,16 +23,35 @@ class App extends Component {
 
   submitQuery(input) {
     // submit ajax request here.
+    console.log('meow', input)
+    let wordsArray = input.split(' ')
+    if (wordsArray.length > 1) {
+      input = wordsArray.join('%20');
+    }
     this.getResults(input);
   }
 
   getResults(input) {
-
+    fetch(`https://api.github.com/search/users?q=${input}`)
+    .then((response)=>{
+      if (response.ok) {
+        response.blob()
+        .then(blob=>
+          this.populateResultsList(blob)
+        )
+      } else {
+        console.log('Network response was not ok.')
+      }
+    })
+    .catch(error=>
+      console.log('There was a problem with the fetch operation: ' + error.message)
+    )
   }
 
-  populateResultsList(result) {
+  populateResultsList(results) {
+    console.log(results)
     this.setState({
-      results: result
+      results: results
     })
   }
 
